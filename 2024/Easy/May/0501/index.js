@@ -1,4 +1,3 @@
-// FIXMW
 /**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
@@ -12,47 +11,51 @@
  * @return {number[]}
  */
 
-function TreeNode(val, left, right) {
-  this.val = val === undefined ? 0 : val;
-  this.left = left === undefined ? null : left;
-  this.right = right === undefined ? null : right;
-}
+function inorderTraversal(root) {
+  let result = [];
+  // if (root === null) {
+  //   return result;
+  // }
 
-// var inorderTraversal = function (root) {
-//   let tmp = root.val;
+  // function helper(node: TreeNode | null) {
+  //   if (node !== null) {
+  //     if (node.left !== null) {
+  //       console.log(node.left, 'node.left');
+  //       helper(node.left);
+  //     }
+  //     result.push(node.val as number);
+  //     if (node.right !== null) {
+  //       helper(node.right);
+  //     }
+  //   }
+  //   console.log(result, 'result');
+  // }
 
-//   for (let index = 0; index < tmp.length; index++) {
-//     const element = tmp[index];
-//     if (index === 0) {
-//       root.val = element;
-//     } else if (element !== null) {
-//       if (root.right < element) {
-//         root.right = new TreeNode(element, null, null);
-//       } else {
-//         root.right.left = new TreeNode(element, null, null);
-//       }
-//     }
-//   }
+  // helper(root);
+  // return result;
 
-//   return root;
-// };
+  let stack = [];
+  let current = root;
 
-// let root = new TreeNode([1, null, 2, 3]);
-// console.log(inorderTraversal(root));
-
-var inorderTraversal = function (root) {
-  const result = [];
-  helper(root, result);
-  return result;
-};
-
-function helper(root, result) {
-  if (root !== null) {
-    helper(root.left, result);
-    result.push(root.val);
-    helper(root.right, result);
+  while (current !== null || stack.length > 0) {
+    while (current !== null) {
+      stack.push(current);
+      current = current.left;
+    }
+    current = stack.pop();
+    result.push(current.val);
+    current = current.right;
   }
+
+  return result;
 }
 
-let root = new TreeNode([1, null, 2, 3]);
-console.log();
+console.log(
+  inorderTraversal(
+    new TreeNode(
+      1,
+      new TreeNode(5, new TreeNode(6, null), new TreeNode(1, null)),
+      new TreeNode(2, new TreeNode(3))
+    )
+  )
+);
